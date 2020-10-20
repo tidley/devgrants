@@ -10,9 +10,56 @@
 
 # Project Description
 
+_Q_
+
 Please describe exactly what you are planning to build. Make sure to include the following:
 
 - Start with the need or problem you are trying to solve with this project.
+
+_A_
+
+Efficient test data management is crucial for the efficient operation of automotive engineering development facilities where high volumes of high-value test data is generated continuously. Integrating test instrumentation from a variety of manufacturers with a range of data interfaces and data types requires bespoke network solutions. Furthermore, multiple projects with their individual requirements and demands means automotive engineers must often access a variety of data storage media to read, write and modify data.
+
+Being faced with a range of data sources accessed from various locations contributes to limited productivity. Some standard data management solutions with their respective limitations are briefly outlined below:
+
+**1. Relational databases (SQL or Oracle) running on server-grade hardware with configurable client software**
+
+- Artificial restrictions set by the suppliers (number of active connections, feature sets, CPU core availability).
+- Physical restrictions created by the infrastructure (network bandwidth, data media read/write speeds).
+- Multiple single points of failure on the network and host machine (connection issues, power loss, corrupt media).
+
+**2. Networked machines, both where the data originates and employee devices**
+
+- Data accessed directly from the source can cause excessive wear on storage medium that weren't designed for high numbers of read/write operations.
+- Over-use of the local CPU to serve data can cause performance issues if running test software.
+
+**3. Network-share drives with access configured using domain controllers and active directories often running on VM's (Windows Server)**
+
+- Data files can easily be miss-placed and duplicated by employees leading to confusion as to the integrity of data.
+- Folder access permissions are granted on a per-user and user-group basis which can become unwieldy with multiple data locations and transitioning employee roles.
+
+**4. Removable media such as USB hard-drives and pen-drives**
+
+- Data are much more likely to be lost when carried on a person.
+- Data are more corruptible since removable media storage hardware are designed with fewer read/write cycles than even consumer-grade physical storage media such as SSD's and hard drives.
+
+**5. E-mails**
+
+- Unnecessary use of email servers to store test data.
+- Data are only accessible by employees who received the e-mail.
+- Unless data are e-mailed it is not necessarily accessible by project engineers.
+
+Increased utilisation of system resources can be achieved by using an IPFS cluster running on system and employee machines with a database such as OrbitDB to provide a uniform front-end for engineers to quickly and reliably access data.
+
+Dependendable long-term storage of data (cold-storage) is required for data audits whereby lack of confirmation of ownership of a particular data set can impose penalties. Leveraging the symbiosis of IPFS and FileCoin can persist the unform front-end experience for employees since data access can be requested using the same key (CID).
+
+Furthermore, long-term data storage of data can be
+
+An automotive engineer is losing efficiency it is a waste of resources for the automotive engineer to be doing anything but analysing test data.
+
+Automotive engineering facilities produce and consume a large amount of data, for example one piece of test equipment may record data at megahertz frequencies and generate several gigabytes of data in under a minute. Data must be stored safely and readily available for analysis.
+
+Data files are often misplaced
 
 Market pressure and regulatory bodies perpetually demand higher performing products at lower cost.
 Product development cycles generate test data that are stored on centralised servers.
@@ -24,7 +71,11 @@ Global manufacturing networks require components to be shipped in order to test.
 Shipping takes time, risks damage, and costs money.
 Tests could be carried out locally but data cannot be readily shared between facilities.
 
+_Q_
+
 - Describe why your solution is going to adequately solve this problem.
+
+_A_
 
 Profitability can be maintained by reducing development costs in a range of areas.
 Cryptographically-secure data sharing opens data sharing potentials.
