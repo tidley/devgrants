@@ -1,6 +1,6 @@
-# Open Grant Proposal: `distributed-automotive-development`
+# Open Grant Proposal: `Distributed Automotive Development`
 
-**distributed-automotive-development:**
+**Distributed Automotive Development:**
 
 **Proposal Category:** `app-dev`
 
@@ -18,13 +18,29 @@ Please describe exactly what you are planning to build. Make sure to include the
 
 _A_
 
-Efficient test data management is crucial for the efficient operation of automotive engineering development facilities where high volumes of high-value test data is generated continuously. Integrating test instrumentation from a variety of manufacturers with a range of data interfaces and data types requires bespoke network solutions. Furthermore, multiple projects with their individual requirements and demands means automotive engineers must often access a variety of data storage media to read, write and modify data.
+Automotive development engineers must access test data from multiple sources before being able to analyse any given suite of tests. Each project, of which there can be dozens running in parallel at a single test facility, consumes terrabytes of data that are saved on various network shares, instrument drives and databases. Aggregating these data into a cohesive project can take time and be fault-prone, leading to data loss and direct drops in operational efficiency.
+
+These data must also be backed up
+
+Streamlined and reliable data management solutions are valuable in automotive engineering where large volumes of high-value data are generated daily at computerised test and development facilities. Each facility will likely operate using test equipment manufactured by different suppliers
+
+Each facility can contain many test laboratories that are used to meausure various attributes from a particular item, such as a turbo, engine, or full vehicle.
+
+where that are used for taking measurements , where anything from a single engine component up to a full vehicle can be tested using an array of digitally-controlled measuring equipment.
+
+labs such as rig-rooms that test individual components to full-vehicle test-cells.
+
+Test systems from multiple suppliers communiate using clearly-defined protocols and commands that are standardised such as AK via serial and HTTP via ethernet. Proprietary file formats may exist for fast-frequency data recorders in the order of MHz, which are often down-sampled for analysis and recorded as something like a '.csv'. tend to be compatible unless of a high-volume (>MHz) data source. can often interact with unencrypted standardised protocols.
+
+Suppliers of the test equipment may use non-standard I/O, requiring bespoke configuration to interface with the facility network. provide test instrumentation, which may operate using fundamentally different control systems such as either non-reprogrammable digitised controllers or fully configurable computer controllers running an operating system such as Microsoft Windows. are manufactured by Integrating test instrumentation from a variety of manufacturers with a range of data interfaces and data types requires bespoke network solutions. Furthermore, a test facility catering for multiple active projects with specific requirements means automotive engineers must often access a variety of data storage media to read, write and modify their project test data.
+
+Efficient management of test data is crucial for the streamlined operation of automotive engineering development facilities where high volumes of measurement data are generated. Multiple suppliers provide test instrumentation, which may operate using fundamentally different control systems such as either non-reprogrammable digitised controllers or fully configurable computer controllers running an operating system such as Microsoft Windows. are manufactured by Integrating test instrumentation from a variety of manufacturers with a range of data interfaces and data types requires bespoke network solutions. Furthermore, a test facility catering for multiple active projects with specific requirements means automotive engineers must often access a variety of data storage media to read, write and modify their project test data.
 
 Being faced with a range of data sources accessed from various locations contributes to limited productivity. Some standard data management solutions with their respective limitations are briefly outlined below:
 
-**1. Relational databases (SQL or Oracle) running on server-grade hardware with configurable client software**
+**1. Relational databases (SQL, Oracle) running on server-grade hardware with configurable client software**
 
-- Artificial restrictions set by the suppliers (number of active connections, feature sets, CPU core availability).
+- Artificial restrictions set by the suppliers (number of active connections, feature sets, CPU cores).
 - Physical restrictions created by the infrastructure (network bandwidth, data media read/write speeds).
 - Multiple single points of failure on the network and host machine (connection issues, power loss, corrupt media).
 
@@ -32,6 +48,7 @@ Being faced with a range of data sources accessed from various locations contrib
 
 - Data accessed directly from the source can cause excessive wear on storage medium that weren't designed for high numbers of read/write operations.
 - Over-use of the local CPU to serve data can cause performance issues if running test software.
+- Dispersed, un-checked copies of data increases data storage waste and reduces data integrity.
 
 **3. Network-share drives with access configured using domain controllers and active directories often running on VM's (Windows Server)**
 
@@ -51,25 +68,7 @@ Being faced with a range of data sources accessed from various locations contrib
 
 Increased utilisation of system resources can be achieved by using an IPFS cluster running on system and employee machines with a database such as OrbitDB to provide a uniform front-end for engineers to quickly and reliably access data.
 
-Dependendable long-term storage of data (cold-storage) is required for data audits whereby lack of confirmation of ownership of a particular data set can impose penalties. Leveraging the symbiosis of IPFS and FileCoin can persist the unform front-end experience for employees since data access can be requested using the same key (CID).
-
-Furthermore, long-term data storage of data can be
-
-An automotive engineer is losing efficiency it is a waste of resources for the automotive engineer to be doing anything but analysing test data.
-
-Automotive engineering facilities produce and consume a large amount of data, for example one piece of test equipment may record data at megahertz frequencies and generate several gigabytes of data in under a minute. Data must be stored safely and readily available for analysis.
-
-Data files are often misplaced
-
-Market pressure and regulatory bodies perpetually demand higher performing products at lower cost.
-Product development cycles generate test data that are stored on centralised servers.
-Bespoke server-side software packages that can provide the required data management tools such as storage, backup, verification, publishing and access control are available for a premium.
-Servers operating in isolation unnecessarily restrict access to test data.
-Inter-facility data sharing rarely occurs due to network security concerns.
-Data retrieval requires licensed and configured client software and access to company networks.
-Global manufacturing networks require components to be shipped in order to test.
-Shipping takes time, risks damage, and costs money.
-Tests could be carried out locally but data cannot be readily shared between facilities.
+Dependendable long-term storage of data (cold-storage) is required for data audits whereby lack of confirmation of ownership of a particular data set can impose penalties. Leveraging the symbiosis of IPFS and Filecoin can persist the familiar front-end experience for employees since data access can be requested using the same key (CID). Storing data once it is created will guarantee the validity of data files by comparing CID of files.
 
 _Q_
 
@@ -77,48 +76,153 @@ _Q_
 
 _A_
 
-Profitability can be maintained by reducing development costs in a range of areas.
-Cryptographically-secure data sharing opens data sharing potentials.
-Open-source software is secure, license-free and typically compatible by design.
-Reducing the number of gateways and increasing the quality of security protocols de-restricts rightful data access.
-Generic software tools can be used to access data.
-Ubiquitous broadband internet enables high volumes of data to be transferred between facilities in real-time.
-Bringing testing equipment online facilitates distributed testing.
+- Using an IPFS cluster to store "hot" data will reduce artificial and physical networking bottle-necks.
+- Distributed IPFS cluster management allows reconfiguration from any network-connected access point.
+- Open-source software is readily validated and customised.
+- Hashing algorithms track any changes in data.
+- Long-term storage of original
 
 ## Value
+
+_Q_
 
 Please describe in more detail why this proposal is valuable for the Filecoin ecosystem. Answer the following questions:
 
 - What are the benefits to getting this right?
 
-The automotive industry is becoming increasingly reliant on data and there's pressure to increase the digitisation to recover dropping vehicle sales. As data becomes a backbone of the industry the economic incentive to store data with reliability will increase.
+_A_
+
+- Data generated by automotive engineering powertrain facilities is high-volume and high-value.
+- Concepts such as 'big-data' is driving the industry to push for access to an increasing volume of digital information.
+- The automotive engineering industry is highly compatible with the reductions in development costs made possible by data-driven processes such as CAD and DoE.
+- Computer-controlled measurement equipment allows improvements in techniques according to Moore's law.
+
+_Q_
 
 - What are the risks if you don't get it right?
 
-The industry will adapt to the data demands.
+_A_
+
+- Loss of confidence in distributed data solutions leading to a lack of potential for future projects.
+
+_Q_
 
 - What are the risks that will make executing on this project difficult?
 
-The automotive industry is enormous and there are some major players in the field (AVL etc.)
+_A_
+
+- Non-standard operating systems, computer hardware and networks.
+- Operational facilities will want to avoid interruptions to producing and processing data whilst migrating to a new system.
+- Projects that have already started may find it difficult to transition to a novel network architecture.
 
 This section should be 1-3 paragraphs long.
 
 ## Deliverables
 
+_Q_
+
 Please describe in details what your final deliverable for this project will be. Include a specification of the project and what functionality the software will deliver when it is finished.
 
-1. Live test data being stored and visible by authenticated users.
+_A - Specification_
+
+1. Large data files (recorded at MHz frequency generating ~10GB in 1.5 minutes, or ~111MB/s\*) every 2 minutes must be able to be processed by the network. Processing includes:
+   - Registered on OrbitDB.
+   - Having 3 duplicates locally plus on Filecoin.
+2. Registered users having access to new files.
+   - Show available files with metadata.
+3. User administration and authentication.
+
+_A - Functionality_
+
+1. New data files on specific machines are detected and replicated to the local IPFS cluster as well as Filecoin.
+2. OrbitDB updated with new file information.
+3. Intuitive, permissioned, data-access portal for users.
+   - OrbitDB with information on each file (time, origin, # copies, locations, etc.)
+4. Access right management controlled by a private key.
+   - Read from an IPNS address.
 
 ## Development Roadmap
 
 Please break up your development work into a clear set of milestones. This section needs to be very detailed (will vary on the project, but aim for around 2 pages for this section).
 
+1. Data from several sources are duplicated to a dedicated IPFS cluster to isolate performance when processing high-volumes of data.
+   - Determine e.g. if data read values should be limited when there's an active test to reduce system loading.
+2.
+
+3. Executable files to setup:
+
+   _Storage nodes_
+
+   1. Install required software to communicate on IPFS.
+      - Detects hard drive read/write speed, network speed etc. to generate system score.
+   2. Menu for configuring things such as:
+      - Database directory
+      - % HDD to leave free
+      - Bootstrap nodes
+   3. Identifies and registers self on network.
+
+   _Admin portal_
+
+   1. Provides relevant admin features to monitor and configure the network
+
+   _Data origins_
+
+   1. Installs required software to communicate on IPFS.
+   2. Provides custom instrument configuration menu to define data source including:
+      - Interface (ethernet, serial)
+      - Internal / external (mirror or read)
+      - Timings (baud rate etc.)
+      - Data directory (if to monitor folder for new files)
+   3. Identifies and registers self on network.
+
+## 2. Executable to run on each oracle which:
+
+- Provides relevant admin features to monitor and configure the network.
+
+## 3. Executable to run on each data generator which:
+
+- Installs required software to communicate on IPFS.
+- Provides custom instrument configuration menu to define data source including:
+  - Interface (ethernet, serial)
+  - Internal / external (mirror or read)
+  - Timings (baud rate etc.)
+  - Data directory (if to monitor folder for new files)
+  -
+- Identifies and registers self on network.
+
 For each milestone, please describe:
 
+_Q_
+
 - The software functionality that we can expect after the completion of each milestone. This should be detailed enough that it can be used to ensure that the software meets the specification you outlined in the Deliverables.
+
+_A_
+
+-
+
+_Q_
+
 - How many people will be working on each milestone and their roles
+
+_A_
+
+-
+
+_Q_
+
 - The amount of funding required for each milestone
+
+_A_
+
+-
+
+_Q_
+
 - How much time this milestone will take to achieve (using real dates)
+
+_A_
+
+-
 
 ## Total Budget Requested
 
@@ -150,7 +254,11 @@ Please link to your team's website here (make sure it's `https`)
 
 ## Relevant Experience
 
+_Q_
+
 Please describe (in words) your team's relevant experience, and why you think you are the right team to build this project. You can cite your team's prior experience in similar domains, doing similar dev work, individual team members' backgrounds, etc.
+
+_A_
 
 ## Team code repositories
 
