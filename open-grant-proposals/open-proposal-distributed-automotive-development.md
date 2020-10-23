@@ -1,4 +1,4 @@
-# Open Grant Proposal: `Distributed Automotive Development`
+# Open Grant Proposal: `Decentralised Automotive Development Test Data`
 
 **Distributed Automotive Development:**
 
@@ -18,25 +18,9 @@ Please describe exactly what you are planning to build. Make sure to include the
 
 _A_
 
-Automotive development engineers must access test data from multiple sources before being able to analyse any given suite of tests. Each project, of which there can be dozens running in parallel at a single test facility, consumes terrabytes of data that are saved on various network shares, instrument drives and databases. Aggregating these data into a cohesive project can take time and be fault-prone, leading to data loss and direct drops in operational efficiency.
+Automotive powertrain test facilities are made up of corridors with test cells on either side containing computer-controlled test instrumentation. Test data are recorded from these instruments and analysed by development engineers.
 
-These data must also be backed up
-
-Streamlined and reliable data management solutions are valuable in automotive engineering where large volumes of high-value data are generated daily at computerised test and development facilities. Each facility will likely operate using test equipment manufactured by different suppliers
-
-Each facility can contain many test laboratories that are used to meausure various attributes from a particular item, such as a turbo, engine, or full vehicle.
-
-where that are used for taking measurements , where anything from a single engine component up to a full vehicle can be tested using an array of digitally-controlled measuring equipment.
-
-labs such as rig-rooms that test individual components to full-vehicle test-cells.
-
-Test systems from multiple suppliers communiate using clearly-defined protocols and commands that are standardised such as AK via serial and HTTP via ethernet. Proprietary file formats may exist for fast-frequency data recorders in the order of MHz, which are often down-sampled for analysis and recorded as something like a '.csv'. tend to be compatible unless of a high-volume (>MHz) data source. can often interact with unencrypted standardised protocols.
-
-Suppliers of the test equipment may use non-standard I/O, requiring bespoke configuration to interface with the facility network. provide test instrumentation, which may operate using fundamentally different control systems such as either non-reprogrammable digitised controllers or fully configurable computer controllers running an operating system such as Microsoft Windows. are manufactured by Integrating test instrumentation from a variety of manufacturers with a range of data interfaces and data types requires bespoke network solutions. Furthermore, a test facility catering for multiple active projects with specific requirements means automotive engineers must often access a variety of data storage media to read, write and modify their project test data.
-
-Efficient management of test data is crucial for the streamlined operation of automotive engineering development facilities where high volumes of measurement data are generated. Multiple suppliers provide test instrumentation, which may operate using fundamentally different control systems such as either non-reprogrammable digitised controllers or fully configurable computer controllers running an operating system such as Microsoft Windows. are manufactured by Integrating test instrumentation from a variety of manufacturers with a range of data interfaces and data types requires bespoke network solutions. Furthermore, a test facility catering for multiple active projects with specific requirements means automotive engineers must often access a variety of data storage media to read, write and modify their project test data.
-
-Being faced with a range of data sources accessed from various locations contributes to limited productivity. Some standard data management solutions with their respective limitations are briefly outlined below:
+Before analysis the test data must be made available since files may be created by multiple devices with differing levels of network connectivity. The methods for collating data files will vary between test facilities depending on network architecture and the techniques used by engineers, but there will be several similarities with inherent drawbacks:
 
 **1. Relational databases (SQL, Oracle) running on server-grade hardware with configurable client software**
 
@@ -66,9 +50,7 @@ Being faced with a range of data sources accessed from various locations contrib
 - Data are only accessible by employees who received the e-mail.
 - Unless data are e-mailed it is not necessarily accessible by project engineers.
 
-Increased utilisation of system resources can be achieved by using an IPFS cluster running on system and employee machines with a database such as OrbitDB to provide a uniform front-end for engineers to quickly and reliably access data.
-
-Dependendable long-term storage of data (cold-storage) is required for data audits whereby lack of confirmation of ownership of a particular data set can impose penalties. Leveraging the symbiosis of IPFS and Filecoin can persist the familiar front-end experience for employees since data access can be requested using the same key (CID). Storing data once it is created will guarantee the validity of data files by comparing CID of files.
+The volume of data being generated by a single test cell (~1 gigabyte / minute) can put a strain on IT infrastructure and create bottlenecks at servers and network switches. These bottlenecks are process inefficiencies and the time spent by engineers waiting for data is a direct cost to businesses as a result.
 
 _Q_
 
@@ -76,11 +58,13 @@ _Q_
 
 _A_
 
-- Using an IPFS cluster to store "hot" data will reduce artificial and physical networking bottle-necks.
-- Distributed IPFS cluster management allows reconfiguration from any network-connected access point.
-- Open-source software is readily validated and customised.
-- Hashing algorithms track any changes in data.
-- Long-term storage of original
+Using an IPFS cluster will distribute the computational load. Unused computer capacity (CPU clock cycles, hard-drive space, network connectivity... ) can be borrowed to perform processing, storage and distribution of data.
+
+A GUI front-end on a suitable database (OrbitDB) will allow engineers to quickly search for and find their data; the IPFS cluster can then efficiently deliver data on request.
+
+Excessive duplication of data is avoided with 3 copies pinned at any one time.
+
+Once a set time is elapsed (e.g. 1 year after last accessed) a file is marked as being able to be removed from the IPFS network. Files are copied to long-term storage (Filecoin) the moment they're generated to preserve the original data.
 
 ## Value
 
@@ -91,6 +75,10 @@ Please describe in more detail why this proposal is valuable for the Filecoin ec
 - What are the benefits to getting this right?
 
 _A_
+
+A successful implementation at one facility could be readily mimicked at other facilities, which have similar requirements.
+
+The requirements are highly demanding in terms of data storage, access and retrieval.
 
 - Data generated by automotive engineering powertrain facilities is high-volume and high-value.
 - Concepts such as 'big-data' is driving the industry to push for access to an increasing volume of digital information.
