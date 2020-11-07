@@ -10,29 +10,20 @@
 
 # Project Description
 
-_Q_
-
 Please describe exactly what you are planning to build. Make sure to include the following:
 
-- Start with the need or problem you are trying to solve with this project.
-
-_A_
+> Start with the need or problem you are trying to solve with this project.
 
 ###### Read https://www.dataversity.net/brief-history-analytics/
-
-1. where data come from
-1. what data are used for
-1. requirements
-1. issues
 
 Data storage is an issue at automotive engineering facilities where large volumes of test data are generated and must be made available for analysis. The issue can be broken up into:
 
 1. Storage - The physical storage requirements grow exponentially as tests become increasingly sophisticated to match legislative requirements.
 1. Indexing - One test can generate data files from multiple test instruments, each covering varying time spans and sample rates, all needing to be linked to the same test.
 1. Retrieval - Accessing large datasets can put a strain on IT network infrastructure.
-1. Processing - Analysis of data requires having confidence in the data source to ensure effective processing.
+1. Processing - Data integrity must be assured for effective analysis.
 
-Traditional client-server architecture is relied upon for the majority of data handling although other methods can sometimes be used to access data. The pitfalls of each of these are outlined:
+Traditional client-server architecture is relied upon for the majority of data handling although other methods can be used to access data. Common pitfalls for these are outlined:
 
 **1. Relational databases (SQL, Oracle) running on server-grade hardware with configurable client software**
 
@@ -53,134 +44,131 @@ Traditional client-server architecture is relied upon for the majority of data h
 
 **4. Removable media such as USB hard-drives and pen-drives**
 
-- Data are much more likely to be lost when carried on a person.
-- Data are more corruptible since removable media storage hardware are designed with fewer read/write cycles than even consumer-grade physical storage media such as SSD's and hard drives.
+- Data can be misplaced when carried on a person.
+- Data are more likely to be corrupted due to the less robust storage media on portable devices.
 
-**5. E-mails**
+**5. Emails**
 
 - Unnecessary use of email servers to store test data.
 - Data are only accessible by employees who received the e-mail.
-- Unless data are e-mailed it is not necessarily accessible by project engineers.
 
-generate masses of measurement data from tests of automotive powertrains to model the performance. Specialised test instrumentation are capable of sampling at megahertz-frequencies and can generate gigabytes of data within a few seconds. Data from instruments involved in each test must be reliably stored and made available for analysis. Statistical analysis depends on the integrity of data to generate optimal solutions. Missing or erroneous data will reduce model confidence, leading to less effective results.
+These issues can be remedied using a decentralised approach built around IPFS clusters, in brief:
 
-Centralised servers are used to process most data at test facilities with access policies managed by a series of domain controllers and active directories. Storage is centralised on servers with network shares and client-software used for access. Data may also be handled by several intermediate computers, where data are duplicated and stored on laptops and workstations.
+1. An IPFS cluster configured to operate on machines running on the local network.
+1. Data files are replicated to the IPFS cluster and Filecoin immediately upon creation. IPFS provides the fast access required by engineers whilst Filecoin provides archiving.
+1. The file CID is stored along with metadata on OrbitDB for retrieval from the cluster.
+1. Data origins can be tracked using the network port that each device is connected to. A secondary use of this is that instrument locations would be known at all times using the network address mapped to physical location.
 
-Handling gigabytes of test data is a computationally expensive task that puts strain on the network infrastructure, including network switches, routers and physical storage media.
+> Describe why your solution is going to adequately solve this problem.
 
-New files must be made quickly available to engineers and automated scripts since automotive development is time-sensitive and to recorded in a database to allow access by engineers and automated scripts. The nature of since the tests carried out are expensive to run and a second chance might not be possible.
+1. Data storage is not restricted to specialised hardware and so can be distributed amongst all compatible machines to maximise the use of available storage and reduce overhead costs associated with purchasing and maintaining servers.
+1. IPFS and OrbitDB are fully integrated for comprehensive and automated indexing of data.
+1. Distributing the storage and processing will reduce data transfer and processing bottlenecks.
+1. Data provenance can be verified using the CID of each file.
 
-Data management systems in automotive engineering test facilities process gigabytes of data from multiple sources, first storing and then making the data available to development engineers. Data are generated by multiple devices and must be aggregated for ease of access.
-
-Data management in automotive engineering is inherently inefficient due to a reliance on centralised servers. The task of retrieving data is physically limited by network switches, hard-drives, processing power and database coverage using a centralised architecture. Furthermore, data retrieval can be complicated by having to navigate multiple servers with seperate credentials.
-
-An example of the most common forms of data storage and their faults are listed below:
-
-These issues can be remedied using a decentralised approach built around IPFS. Clusters of nodes in each discrete network location such as a test cell or corridor. The outline of the process would be:
-
-1. Newly generated data are replicated to an IPFS cluster for local access and to Filecoin for archiving.
-1. Each new file will exist on the cluster for a pre-determined time after the last time accessed.
-1. Records of each file will be stored on OrbitDB to allow indexing, each entry will contain time of creation, origin, project, test name, location(s), duplicates, is-archived, last accessed, expiry date, failed copies, etc. for each file.
-1. Each device able to run the client software on the network will be assigned an IPFS ID to allow it to write to and read the OrbitDB database and have it's activities traced throughout it's lifecycle.
-1. Locations of devices is updated autonomously using the currently connected network port.
-1. Instrument locations updated in real-time (address, instrument type, instrument ID, serial #, ...)
-1. Data are assigned to active projects and so can be easily discovered
-1. (data sources (instrument ID, times, ...))
-
-_Q_
-
-- Describe why your solution is going to adequately solve this problem.
-
-_A_
-
-The benefits of this approach:
-
-1. Peer-to-peer communication would reduced network bottlenecks since computers would be able to communicate directly, bypassing central servers and being able to take the path of least resistance.
-1.
-
-Using an IPFS cluster will distribute the computational load and reduce the time taken for engineers to access data. Unused computer capacity (CPU clock cycles, hard-drive space, network connectivity... ) can be borrowed to perform processing, storage and distribution of data.
-
-A GUI front-end on a suitable database (OrbitDB) will allow engineers to quickly search for and find their data; the IPFS cluster can then efficiently deliver data on request.
-
-Excessive duplication of data is avoided with 3 copies pinned at any one time.
-
-Once a set time is elapsed (e.g. 1 year after last accessed) a file is marked as being able to be removed from the IPFS network. Files are copied to long-term storage (Filecoin) the moment they're generated to preserve the original data.
+---
 
 ## Value
 
-_Q_
-
 Please describe in more detail why this proposal is valuable for the Filecoin ecosystem. Answer the following questions:
 
-- What are the benefits to getting this right?
+> What are the benefits to getting this right?
 
-_A_
+Reliable storage is required in the automotive industry for auditing and long-term analysis. Providing an easy to integrate storage solution at less cost that doesn't need infrastructure changes when storage requirements grow is a very attractive proposition. Additional benefits such as globally accessible sharing increase the value of data for the client.
 
-A successful implementation at one facility could be readily mimicked at other facilities, which have similar requirements.
+The data management requirements of automotive facilities are similar so once an implementation is shown to be effective it can be readily reproduced at other sites.
 
-The requirements are highly demanding in terms of data storage, access and retrieval.
+The solution would be a unified and more cost-effective approach compared to the data management solutions available that require expensive licenses and infrastructure.
 
-- Data generated by automotive engineering powertrain facilities is high-volume and high-value.
-- Concepts such as 'big-data' is driving the industry to push for access to an increasing volume of digital information.
-- The automotive engineering industry is highly compatible with the reductions in development costs made possible by data-driven processes such as CAD and DoE.
-- Computer-controlled measurement equipment allows improvements in techniques according to Moore's law.
+> What are the risks if you don't get it right?
 
-_Q_
+| Risk                                                                                               | Mitigation                                                                                                                  |
+| -------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| Data that are misplaced or corrupted would be costly to replace.                                   | Gradually migrate with existing data management systems continuing to operate.                                              |
+| Poorly implemented client software on critical equipment could cause damage to facility equipment. | Use a parallel network of computers that are non-critical to allow performance monitoring before using in-service machines. |
 
-- What are the risks if you don't get it right?
+> What are the risks that will make executing on this project difficult?
 
-_A_
+| Risk                                                                                               | Mitigation                                                                                                |
+| -------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| Training and gaining trust of employees on new systems.                                            | Understand the workflow and develop the client software to integrate with minimal effort to the end user. |
+| Integrating with data acquisition systems.                                                         | Develop low-level interfaces to communicate with instruments.                                             |
+| Ensure no long-term performance degradation caused by over-use of hard drives or processing power. | Allow some overheads by monitoring system performance.                                                    |
+| Processing files from some instruments that can generate a 10 GB data file within a minute.        | Avoid excessive data handling.                                                                            |
+| Interfacing with various computer operating systems.                                               | Develop software to be compatible on a wide range of system architectures.                                |
+| Operational facilities will want to avoid interruptions.                                           | Develop system in parallel to allow seamless switching.                                                   |
 
-- Loss of confidence in distributed data solutions leading to a lack of potential for future projects.
-
-_Q_
-
-- What are the risks that will make executing on this project difficult?
-
-_A_
-
-- Non-standard operating systems, computer hardware and networks.
-- Operational facilities will want to avoid interruptions to producing and processing data whilst migrating to a new system.
-- Projects that have already started may find it difficult to transition to a novel network architecture.
-
-This section should be 1-3 paragraphs long.
+---
 
 ## Deliverables
 
-_Q_
+> Please describe in details what your final deliverable for this project will be. Include a specification of the project and what functionality the software will deliver when it is finished.
 
-Please describe in details what your final deliverable for this project will be. Include a specification of the project and what functionality the software will deliver when it is finished.
+### Specification
 
-_A - Specification_
+1. Continuous monitoring of multiple locations for new test files (>6 per test cell). New files rapidly duplicated to IPFS cluster and Filecoin.
+   1. Data production volume from each test cell can peak at 10 GB per minute.
+   1. A facility may contain anywhere between 5 to 100 test cells.
+1. Three copies of live files on IPFS cluster at any time.
+1. Entry for new files containing any required information on OrbitDB.
+1. Modifications to entry in OrbitDB when file status changes.
+1. Authenticated content delivery via intuitive front-end with OrbitDB as back-end.
 
-1. Large data files (recorded at MHz frequency generating ~10GB in 1.5 minutes, or ~111MB/s\*) every 2 minutes must be able to be processed by the network. Processing includes:
-   - Registered on OrbitDB.
-   - Having 3 duplicates locally plus on Filecoin.
-2. Registered users having access to new files.
-   - Show available files with metadata.
-3. User administration and authentication.
-4. Content delivery system to enable effective data aggregation.
+### Functionality
 
-_A - Functionality_
+There will be two core sides to the solution that will have their functionalities outlined seperately:
 
-1. New data files on specific machines are detected and replicated to the local IPFS cluster as well as Filecoin.
-2. OrbitDB updated with new file information.
-3. Intuitive, permissioned, data-access portal for users.
-   - OrbitDB with information on each file (time, origin, # copies, locations, etc.)
-4. Access right management controlled by a private key.
-   - Read from an IPNS address.
+1. Server-side software for the bulk of files management.
+1. Client-side software for administration and content delivery.
+
+**Server**
+
+1. New data files on monitored machines are replicated to the local IPFS cluster as well as Filecoin.
+1. OrbitDB updated with new file including metadata such as time of creation, origin, project, test name, current location, # duplicates, is-archived, last accessed, expiry date, failed operations, etc.
+
+**Client**
+
+1. Front-end to OrbitDB allowing data retrieval for authenticated users.
+1. Access right management configuration.
+
+---
 
 ## Development Roadmap
 
-Please break up your development work into a clear set of milestones. This section needs to be very detailed (will vary on the project, but aim for around 2 pages for this section).
+> Please break up your development work into a clear set of milestones. This section needs to be very detailed (will vary on the project, but aim for around 2 pages for this section).
+
+### **Milestone X: Process analysis**
+
+1. Review standard operating procedures at current facility.
+
+### Software functionality
+
+### People assigned
+
+### Funding
+
+### Duration
+
+### **Milestone X: Shadow system**
 
 1. Data from several sources are duplicated to a dedicated IPFS cluster to isolate performance when processing high-volumes of data.
-   - Determine e.g. if data read values should be limited when there's an active test to reduce system loading.
-2.
+   1. Determine e.g. if data read values should be limited when there's an active test to reduce system loading.
+
+### Software functionality
+
+### People assigned
+
+### Funding
+
+### Duration
+
+### **Milestone X: Program development**
+
+### Software functionality
 
 3. Executable files to setup:
 
-   _Storage nodes_
+   _Servers_
 
    1. Install required software to communicate on IPFS.
       - Detects hard drive read/write speed, network speed etc. to generate system score.
@@ -190,68 +178,42 @@ Please break up your development work into a clear set of milestones. This secti
       - Bootstrap nodes
    3. Identifies and registers self on network.
 
-   _Admin portal_
-
-   1. Provides relevant admin features to monitor and configure the network
-
-   _Data origins_
+   _Clients_
 
    1. Installs required software to communicate on IPFS.
-   2. Provides custom instrument configuration menu to define data source including:
+   1. Provides relevant admin features to authenticated user to monitor and configure the network.
+   1. Provides custom instrument configuration menu to define data source including:
       - Interface (ethernet, serial)
       - Internal / external (mirror or read)
       - Timings (baud rate etc.)
       - Data directory (if to monitor folder for new files)
-   3. Identifies and registers self on network.
+   1. Identifies and registers instruments on network.
 
-## 2. Executable to run on each oracle which:
+### People assigned
 
-- Provides relevant admin features to monitor and configure the network.
+### Funding
 
-## 3. Executable to run on each data generator which:
+### Duration
 
-- Installs required software to communicate on IPFS.
-- Provides custom instrument configuration menu to define data source including:
-  - Interface (ethernet, serial)
-  - Internal / external (mirror or read)
-  - Timings (baud rate etc.)
-  - Data directory (if to monitor folder for new files)
-  -
-- Identifies and registers self on network.
+### **Milestone X: System handover**
+
+### Software functionality
+
+### People assigned
+
+### Funding
+
+### Duration
 
 For each milestone, please describe:
 
-_Q_
+> The software functionality that we can expect after the completion of each milestone. This should be detailed enough that it can be used to ensure that the software meets the specification you outlined in the Deliverables.
 
-- The software functionality that we can expect after the completion of each milestone. This should be detailed enough that it can be used to ensure that the software meets the specification you outlined in the Deliverables.
+> How many people will be working on each milestone and their roles
 
-_A_
+> The amount of funding required for each milestone
 
--
-
-_Q_
-
-- How many people will be working on each milestone and their roles
-
-_A_
-
--
-
-_Q_
-
-- The amount of funding required for each milestone
-
-_A_
-
--
-
-_Q_
-
-- How much time this milestone will take to achieve (using real dates)
-
-_A_
-
--
+> How much time this milestone will take to achieve (using real dates)
 
 ## Total Budget Requested
 
@@ -260,6 +222,16 @@ Sum up the total requested budget across all milestones, and include that figure
 ## Maintenance and Upgrade Plans
 
 Specify your team's long-term plans to maintain this software and upgrade it over time.
+
+1. Hardware boxes to plug-and-play devices into network allowing non-computer controlled instruments to interface with the network. This would include features to convert analogue data to digital data where necessary. Such a box would have to consider:
+   - Interface (analogue, ethernet, serial)
+   - If analogue:
+     - Baud rate
+     - Triggers
+   - If digital:
+     - Data format
+
+---
 
 # Team
 
@@ -283,11 +255,11 @@ Please link to your team's website here (make sure it's `https`)
 
 ## Relevant Experience
 
-_Q_
+> Please describe (in words) your team's relevant experience, and why you think you are the right team to build this project. You can cite your team's prior experience in similar domains, doing similar dev work, individual team members' backgrounds, etc.
 
-Please describe (in words) your team's relevant experience, and why you think you are the right team to build this project. You can cite your team's prior experience in similar domains, doing similar dev work, individual team members' backgrounds, etc.
-
-_A_
+| Team member   | Relevant experience                                                                                                                                                                                                                                                                                                                                                                                                                |
+| ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Dr. Tom Dwyer | A BEng in Motorsport Engineering and a Ph.D in Automotive Engineering studying the effects of test conditions on data quality. Academia was proven by industrial experience working at MG (2 years), Caterpillar-Perkins (9 months) and Mahle Powertrain (3 years). More recently working in the blockchain industry for a year developing decentralised apps using decentralised technologies such as IPFS, Bitcoin and Ethereum. |
 
 ## Team code repositories
 
