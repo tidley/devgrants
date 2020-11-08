@@ -89,14 +89,14 @@ The solution would be a unified and more cost-effective approach compared to the
 
 > What are the risks that will make executing on this project difficult?
 
-| Risk                                                                                               | Mitigation                                                                                                |
-| -------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| Training and gaining trust of employees on new systems.                                            | Understand the workflow and develop the client software to integrate with minimal effort to the end user. |
-| Integrating with data acquisition systems.                                                         | Develop low-level interfaces to communicate with instruments.                                             |
-| Ensure no long-term performance degradation caused by over-use of hard drives or processing power. | Allow some overheads by monitoring system performance.                                                    |
-| Processing files from some instruments that can generate a 10 GB data file within a minute.        | Avoid excessive data handling.                                                                            |
-| Interfacing with various computer operating systems.                                               | Develop software to be compatible on a wide range of system architectures.                                |
-| Operational facilities will want to avoid interruptions.                                           | Develop system in parallel to allow seamless switching.                                                   |
+| Risk                                                                                               | Mitigation                                                                                                                                         |
+| -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Training and gaining trust of employees on new systems.                                            | Understand the workflow and develop the client software to integrate with minimal effort to the end user.                                          |
+| Integrating with data acquisition systems.                                                         | Develop low-level interfaces to communicate with instruments.                                                                                      |
+| Ensure no long-term performance degradation caused by over-use of hard drives or processing power. | Allow some overheads by monitoring system performance.                                                                                             |
+| Processing files from some instruments that can generate a 10 GB data file within a minute.        | Avoid excessive data handling.                                                                                                                     |
+| Interfacing with various computer operating systems.                                               | Develop software to be compatible on the majority of systems, network to incompatible devices with compatible machines to circumvent restrictions. |
+| Operational facilities will want to avoid interruptions.                                           | Develop system in parallel to allow seamless switching.                                                                                            |
 
 ---
 
@@ -137,73 +137,89 @@ There will be two core sides to the solution that will have their functionalitie
 
 > Please break up your development work into a clear set of milestones. This section needs to be very detailed (will vary on the project, but aim for around 2 pages for this section).
 
-### **Milestone X: Process analysis**
+### **Milestone X: Shadow system development**
 
-1. Review standard operating procedures at current facility.
+1. Review standard operating procedures at an operational facility.
+   1. Data management.
+      1. Where data originates.
+      1. Where data are stored.
+      1. Volume of data / data files.
+      1. Backup requirements.
+   1. Process analysis.
+      1. Number of users.
+      1. Automated scripts and processes.
+      1. Configuration of projects.
+   1. System analysis.
+      1. Determine if data read operations should be limited to certain periods such as when a test is finished.
+1. Develop system to operate in parallel to minimise effect on live projects.
+   1. Gain information on requirements in isolation.
+   1. Develop effective data processing methods.
+   1. Compare with existing infrastructure requirements.
 
-### Software functionality
+#### **Software functionality**
 
-### People assigned
+1. Process data from a sub-set of devices.
+   1. Duplicate data to a dedicated IPFS cluster.
 
-### Funding
+#### **People assigned**
 
-### Duration
+#### **Funding**
 
-### **Milestone X: Shadow system**
+#### **Duration**
 
-1. Data from several sources are duplicated to a dedicated IPFS cluster to isolate performance when processing high-volumes of data.
-   1. Determine e.g. if data read values should be limited when there's an active test to reduce system loading.
+60 days
 
-### Software functionality
+### **Milestone X: Live system development**
 
-### People assigned
+1. Develop software for devices running on site.
+   1. Majority of devices will be running Windows 7 to Windows 10 with some exceptions (servers and specialist hardware).
+1. Deploy trial replacement system.
+   1. Demonstrate performance compared to existing systems.
 
-### Funding
+#### **Software functionality**
 
-### Duration
+_Servers_
 
-### **Milestone X: Program development**
+1. Software operations restricted to use limited portion of available free processing power and to prioritise other system processes.
+1. Storage dynamically limited to avoid completely filling hard disks.
+1. Removes data after 12 months of not being accessed.
 
-### Software functionality
+_Clients_
 
-3. Executable files to setup:
+1. Configures which data sources should be compiled for a project.
+1.
 
-   _Servers_
+#### **People assigned**
 
-   1. Install required software to communicate on IPFS.
-      - Detects hard drive read/write speed, network speed etc. to generate system score.
-   2. Menu for configuring things such as:
-      - Database directory
-      - % HDD to leave free
-      - Bootstrap nodes
-   3. Identifies and registers self on network.
+#### **Funding**
 
-   _Clients_
+#### **Duration**
 
-   1. Installs required software to communicate on IPFS.
-   1. Provides relevant admin features to authenticated user to monitor and configure the network.
-   1. Provides custom instrument configuration menu to define data source including:
-      - Interface (ethernet, serial)
-      - Internal / external (mirror or read)
-      - Timings (baud rate etc.)
-      - Data directory (if to monitor folder for new files)
-   1. Identifies and registers instruments on network.
+### **Milestone X: System rollout and handover**
 
-### People assigned
+1. Permits trained users to configure software on new devices and modify configuration.
+1.
 
-### Funding
+#### **Software functionality**
 
-### Duration
+_Servers_
 
-### **Milestone X: System handover**
+1. Executable files with GUI for configuring system.
+   1. Database directory
+   1. % HDD to leave free
+   1. Bootstrap nodes
+1. Registers self to network
 
-### Software functionality
+_Cients_
 
-### People assigned
+1. Executable file to install interface.
+1. Web-based tool that
 
-### Funding
+#### **People assigned**
 
-### Duration
+#### **Funding**
+
+#### **Duration**
 
 For each milestone, please describe:
 
